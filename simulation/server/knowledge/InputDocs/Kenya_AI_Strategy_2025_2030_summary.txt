@@ -1,0 +1,40 @@
+Kenya National AI Strategy 2025-2030 - Summary
+
+1. OVERVIEW
+Kenya's National AI Strategy was launched in March 2025, developed by the Ministry of Information, Communications and the Digital Economy. It provides a comprehensive outlook for strengthening Kenya's AI ecosystem across economic, social, and political dimensions.
+
+2. STRATEGIC PILLARS
+- AI Governance and Ethics: Establishing frameworks for responsible AI use
+- AI Infrastructure: Building computing and connectivity infrastructure
+- AI Talent Development: Expanding AI education and skills training
+- AI Research and Innovation: Strengthening R&D capacity
+- AI Adoption: Promoting AI uptake across sectors (agriculture, health, finance, education)
+- Data Ecosystem: Improving data availability, quality, and governance
+
+3. KEY TARGETS
+- Position Kenya as an AI hub in East Africa
+- Train 100,000+ AI practitioners by 2030
+- Establish AI centers of excellence in universities
+- Create regulatory sandboxes for AI experimentation
+- Develop local language AI models (Swahili, other Kenyan languages)
+
+4. PRIORITY SECTORS
+- Agriculture: Precision farming, crop disease detection, weather prediction
+- Healthcare: Diagnostic AI, drug discovery, health system optimization
+- Financial Services: Fraud detection, credit scoring, mobile money AI
+- Education: Personalized learning, automated assessment
+- Government Services: Smart governance, citizen service delivery
+
+5. INFRASTRUCTURE PLANS
+- National data center expansion (Konza Technopolis)
+- Cloud computing partnerships
+- Open data initiatives through Kenya Open Data Portal
+- 5G rollout for AI-ready connectivity
+
+6. RELEVANCE TO ITU AI READINESS FRAMEWORK
+- Strong alignment with Dimension 7 (Strategy Alignment) — clear top-down national strategy
+- Dimension 4 (Contextualization) — emphasis on local language models and local data
+- Dimension 9 (Human Impact) — ambitious talent development targets
+- Dimension 13 (Digital Infrastructure) — infrastructure investment plans
+- Dimension 12 (Granular Priorities) — clear sector-specific priorities
+- Kenya participates in ITU AI for Good initiatives and Plugfest projects

@@ -1,0 +1,33 @@
+ITU-T Y.3172: Architectural Framework for Machine Learning in Future Networks Including IMT-2020
+
+Summary of Key Content (referenced in the AI Readiness Framework):
+
+1. SCOPE
+ITU-T Y.3172 specifies the architectural framework for machine learning (ML) in future networks including IMT-2020. It defines the ML pipeline architecture with nodes and interfaces for integrating ML into network operations.
+
+2. ML PIPELINE NODES
+The standard defines several key nodes in the ML pipeline:
+- SRC (Source): Data collection points that gather raw data from network elements
+- ML Function: Where ML models are trained, validated, and execute inference
+- SINK: Where inference results are applied (actuators, control plane)
+- Sandbox: Validation environment for testing ML models before deployment
+- Collector: Aggregates data from multiple sources
+- Preprocessor: Cleans and transforms raw data for ML consumption
+
+3. ML PIPELINE ARCHITECTURE
+The pipeline follows: SRC → Collector → Preprocessor → Model Training → Model Evaluation → SINK
+With a Sandbox node for validation parallel to the main pipeline.
+
+4. INTERFACES
+- Interface between SRC and Collector (data ingestion)
+- Interface between ML Function and SINK (inference delivery)
+- Interface between Sandbox and ML Function (model validation)
+
+5. RELEVANCE TO AI READINESS FRAMEWORK
+- Dimension 5 (AI Integration in Workflows): Y.3172 provides the standard pipeline for AI integration
+- Dimension 10 (AI & Policies): References Y.3172 for policy evaluation in AI lifecycle
+- Dimension 13 (Digital Infrastructure): Y.3172 nodes map to physical infrastructure requirements
+- The AI pipeline stages (SRC, training, SINK, Sandbox) map to the 6 factors: data → SRC, research → training, deployment → SINK, sandbox → Sandbox
+
+6. ENERGY CONSIDERATIONS
+The standard also addresses energy characteristics of pipeline nodes, relevant to Energy AI Readiness metrics.

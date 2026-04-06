@@ -1,0 +1,242 @@
+{
+  "framework_version": "2.0",
+  "framework_source": "ITU AI Ready - Analysis Towards a Standardized Readiness Framework, Report 2.0, January 2026",
+  "factors": [
+    {"id": "data", "name": "Data", "description": "Accessibility and quality of datasets for analysis of AI applications"},
+    {"id": "research", "name": "Research", "description": "Collaboration between domain-specific and AI research communities"},
+    {"id": "deployment", "name": "Deployment Support", "description": "Infrastructure and ecosystem readiness for AI deployment"},
+    {"id": "standards", "name": "Standards", "description": "Ensuring trust, interoperability, and compliance"},
+    {"id": "opensource", "name": "Open Source and Code", "description": "Enabling rapid adoption through an open developer ecosystem"},
+    {"id": "sandbox", "name": "Sandbox Environments", "description": "Platforms for AI experimentation and validation"}
+  ],
+  "dimensions": [
+    {
+      "id": 1,
+      "name": "Data/Model Marketplace",
+      "short_name": "data_marketplace",
+      "description": "Measures the creation of an ecosystem for startups, B2B, or other value-providers to create services from (un)structured data, expert knowledge base, and general platform, and monetize them.",
+      "mapped_factors": ["data", "opensource"],
+      "metrics": [
+        {"id": "d1_m01", "name": "Dataset Properties", "description": "Properties of datasets (metadata: types structured/unstructured, number of datasets, volume, velocity, variety, quality)"},
+        {"id": "d1_m02", "name": "Model Properties", "description": "Properties of models (metadata: types, size, performance, ML/DL, i/o, training dataset parameters)"},
+        {"id": "d1_m03", "name": "Data Collection Sources", "description": "Location, heterogeneity, number of sources, privacy/trust, synthetic/real world, type of source"},
+        {"id": "d1_m04", "name": "Diligence Metrics", "description": "License and participation agreement templates for marketplace trust"},
+        {"id": "d1_m05", "name": "Marketplace Activity", "description": "Number of data producers, consumers, agreements, transactions in the data marketplace"},
+        {"id": "d1_m06", "name": "Open Datasets", "description": "Number of open datasets, downloads, global citations"},
+        {"id": "d1_m07", "name": "Marketplace Participants", "description": "Number of active participants and transaction frequencies"},
+        {"id": "d1_m08", "name": "Fairness and Bias", "description": "Safeguards to manage data bias or data quality risks"},
+        {"id": "d1_m09", "name": "Privacy and Security", "description": "Privacy-preserving mechanisms, authentication, authorization, just-in-time deletion"},
+        {"id": "d1_m10", "name": "Personal Data Standards", "description": "Standards on personal data protection"},
+        {"id": "d1_m11", "name": "Data Governance", "description": "Percentage of datasets under partner agreements, license metrics"},
+        {"id": "d1_m12", "name": "Standards-Compliant Formats", "description": "Amount of data available in pre-specified standard and interoperable manner"},
+        {"id": "d1_m13", "name": "Open-Source Models", "description": "Properties of open-source models, openly published weights, number of open-source models by domain"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Generated Content Marketplace",
+      "short_name": "generated_content",
+      "description": "Measures the ease of creation of new services using AI, including new datasets/models generated for new AI services.",
+      "mapped_factors": ["data", "opensource"],
+      "metrics": [
+        {"id": "d2_m01", "name": "Ecosystem Parameters", "description": "Datasets, models for content generation, pluggability, trading/monetization"},
+        {"id": "d2_m02", "name": "Guardrails", "description": "Availability of guardrails for hallucinations and ethical content"},
+        {"id": "d2_m03", "name": "Multi-modal Support", "description": "Support for multi-modal content generation"},
+        {"id": "d2_m04", "name": "Fake Detection", "description": "Evaluation techniques for fake detection"},
+        {"id": "d2_m05", "name": "Regional Customization", "description": "Customization mechanisms for regional content"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Cross-Domain Correlation Analysis",
+      "short_name": "cross_domain",
+      "description": "Measures cross-domain correlation in integrating AI, finding similarities and patterns in different domain workflows and opportunities for AI integration.",
+      "mapped_factors": ["data", "standards"],
+      "metrics": [
+        {"id": "d3_m01", "name": "Integrated Workflow", "description": "Existence of integrated workflow including prevention, detection, response, and impact analysis"},
+        {"id": "d3_m02", "name": "Domain Status", "description": "Status of application domains using available data and regional readiness parameters"},
+        {"id": "d3_m03", "name": "Domain Models", "description": "Domain-specific workflows/models"},
+        {"id": "d3_m04", "name": "Domain KPIs", "description": "Domain-specific KPIs"},
+        {"id": "d3_m05", "name": "Infrastructure Representation", "description": "Availability of representation schemes for infrastructure deployment"},
+        {"id": "d3_m06", "name": "Cycle Time Reduction", "description": "Benefits due to correlation: cycle time reduction via integrated workflows"},
+        {"id": "d3_m07", "name": "Coverage and Scale", "description": "Coverage in terms of area and scale in terms of deployments"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Contextualization and Regional Impact",
+      "short_name": "contextualization",
+      "description": "Handles indigenous solutions, contextualization with regional inputs for maximizing community impact, and adoption level of regional solutions at larger scale.",
+      "mapped_factors": ["data", "research", "deployment"],
+      "metrics": [
+        {"id": "d4_m01", "name": "Regional Innovation", "description": "Number/quality of regionally developed patents, technology components, solutions"},
+        {"id": "d4_m02", "name": "Local Datasets", "description": "Availability of structured and accessible local datasets for training AI models"},
+        {"id": "d4_m03", "name": "Indigenous Service Users", "description": "Number of users of indigenous services"},
+        {"id": "d4_m04", "name": "Regional Customizations", "description": "Generalized vs. contextualized solutions with local inputs"},
+        {"id": "d4_m05", "name": "Technology Adoption", "description": "Adoption and scaling of local technologies in other markets"},
+        {"id": "d4_m06", "name": "Knowledge Products", "description": "Number of localized standard operating procedures, after-action reviews, hybrid AI playbooks"},
+        {"id": "d4_m07", "name": "Cultural Diversity", "description": "Cultural diversity brought by regional inputs"},
+        {"id": "d4_m08", "name": "Best Practices Adoption", "description": "Number of new regions adopting AI-based workflow from other regions"},
+        {"id": "d4_m09", "name": "Sub-group Representation", "description": "Representation of sub-groups in dataset for fine-tuning, prompt-tuning or evaluations"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Level of Integration of AI in Workflows",
+      "short_name": "ai_integration",
+      "description": "Measures how well AI is integrated into domain workflows and how many benefits it provides. AI is seen as a tool to optimize different domain workflows.",
+      "mapped_factors": ["standards"],
+      "metrics": [
+        {"id": "d5_m01", "name": "Automation Level", "description": "Level of automation achieved by integrating AI"},
+        {"id": "d5_m02", "name": "Benefits", "description": "Benefits achieved by integrating AI"},
+        {"id": "d5_m03", "name": "Time/Energy Saved", "description": "Time and energy saved through AI integration"},
+        {"id": "d5_m04", "name": "Efficiency", "description": "Efficiency metrics including containment time"},
+        {"id": "d5_m05", "name": "Redundancy", "description": "Redundancy in AI-integrated systems"},
+        {"id": "d5_m06", "name": "Scalability", "description": "Scalability of AI techniques"},
+        {"id": "d5_m07", "name": "Integration Level", "description": "Level of AI integration at design, coding, and evaluation levels"},
+        {"id": "d5_m08", "name": "Model Suitability", "description": "Discovery and suitability of model and dataset for the workflow"},
+        {"id": "d5_m09", "name": "Service Multiplier", "description": "Number of AI services for the same set of resources"},
+        {"id": "d5_m10", "name": "Quality Improvement", "description": "Improvement in quality of services by integrating AI"},
+        {"id": "d5_m11", "name": "Scope Extension", "description": "Extension of scope and range of services"},
+        {"id": "d5_m12", "name": "Cost Reduction", "description": "Demonstrable reduction in cost for similar services"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Human Interface",
+      "short_name": "human_interface",
+      "description": "Measures the use of AI for ease of human interaction with systems/workflows across various devices.",
+      "mapped_factors": ["standards", "deployment"],
+      "metrics": [
+        {"id": "d6_m01", "name": "AI-Ready Interface Penetration", "description": "Availability/penetration of applications with AI-ready human interface"},
+        {"id": "d6_m02", "name": "Local Language Models", "description": "Availability of AI models in the local language used in the human interface"},
+        {"id": "d6_m03", "name": "Interaction Channels", "description": "Channels and devices (mobiles, kiosks, smart panels, sensors, wearables) for human-AI interaction"},
+        {"id": "d6_m04", "name": "Usability Level", "description": "Usability level of AI-integrated applications and services"},
+        {"id": "d6_m05", "name": "Cultural Sensitivity", "description": "Level of cultural sensitivity applied to human interfaces"},
+        {"id": "d6_m06", "name": "Safety Integration", "description": "Level of safety integrated into the human interface with responsible interaction safeguards"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Strategy Alignment",
+      "short_name": "strategy_alignment",
+      "description": "Describes the overall gains of coordination for AI integration strategies across distributed entities including stakeholders and domains.",
+      "mapped_factors": ["standards"],
+      "metrics": [
+        {"id": "d7_m01", "name": "Coordination Level", "description": "Level of coordination between service providers: communication channels, vertical coordination, coverage"},
+        {"id": "d7_m02", "name": "Time to Go-Live", "description": "Time delay in solution delivery from design to deployment"},
+        {"id": "d7_m03", "name": "Intent Representations", "description": "Top-level intent/vision representations and breakdown into task-specific representations"},
+        {"id": "d7_m04", "name": "Interoperability Standards", "description": "Standards on interoperability of AI systems in public administrations and private sector"},
+        {"id": "d7_m05", "name": "Service Provider Mapping", "description": "Availability of service providers and capabilities mapped to top-level intent"},
+        {"id": "d7_m06", "name": "Domain Impact", "description": "Domains impacted by the top-level intent/vision"},
+        {"id": "d7_m07", "name": "Co-benefits Analysis", "description": "Correlation and co-benefits between higher-level intents and sub-tasks"},
+        {"id": "d7_m08", "name": "International Cooperation", "description": "Metrics related to international liaisons and agreements on AI solutions"}
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Collaboration with AI",
+      "short_name": "collaboration",
+      "description": "Measures the level of collaboration between humans and AI in various workflows, including dynamic interaction and shaping of AI output.",
+      "mapped_factors": ["opensource", "standards"],
+      "metrics": [
+        {"id": "d8_m01", "name": "Co-creation Ease", "description": "Ease of collaboration and co-creation (human in inference process)"},
+        {"id": "d8_m02", "name": "Traditional Knowledge Integration", "description": "Ability to integrate traditional knowledge into AI-based solutions"},
+        {"id": "d8_m03", "name": "Exchange Value", "description": "Value added by the exchange between humans and AI"},
+        {"id": "d8_m04", "name": "Prompting Efficiency", "description": "Prompting effort vs. quality of AI-generated component"},
+        {"id": "d8_m05", "name": "Baseline Comparison", "description": "Comparison of AI co-created output with baseline (AI-only or human-only)"},
+        {"id": "d8_m06", "name": "IAPs Supported", "description": "Incident Action Plans produced with AI techniques inputs"},
+        {"id": "d8_m07", "name": "Fine-tuning Effort", "description": "Fine-tuning and optimization efforts vs. results for open-source vs closed models"}
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Impacts of Humans in AI Integration",
+      "short_name": "human_impact",
+      "description": "Measures the impact of humans (AI experts, domain experts, general users) on AI integration through modeling, training, fine-tuning, and adoption.",
+      "mapped_factors": ["sandbox"],
+      "metrics": [
+        {"id": "d9_m01", "name": "Skill Distribution", "description": "Skill distribution and levels in AI, Cloud, IoT, 5G technologies"},
+        {"id": "d9_m02", "name": "Expert Intersection", "description": "Intersection of domain experts aware of AI and AI practitioners aware of domain techniques"},
+        {"id": "d9_m03", "name": "Ecosystem Readiness", "description": "Ecosystem readiness/ability to develop AI skills and talents"},
+        {"id": "d9_m04", "name": "AI Awareness", "description": "AI awareness and adoption levels among end-users"},
+        {"id": "d9_m05", "name": "Training Programs", "description": "Number of academic programmes or certified training courses in AI"},
+        {"id": "d9_m06", "name": "Experts Trained", "description": "Number of experts trained per year on AI-supported workflows"},
+        {"id": "d9_m07", "name": "Skills Gap", "description": "Skills gap analysis identifying currently lacking skills"},
+        {"id": "d9_m08", "name": "Action Latency", "description": "Inference-to-action latency: time from detection to human action"}
+      ]
+    },
+    {
+      "id": 10,
+      "name": "AI & Policies",
+      "short_name": "ai_policies",
+      "description": "Two-fold: measures ability to use AI for policy experimentation and extrapolation, and readiness of policies to enable smooth AI integration.",
+      "mapped_factors": ["sandbox", "deployment"],
+      "metrics": [
+        {"id": "d10_m01", "name": "Policy Sandbox", "description": "Availability of sandboxes evaluating domain-specific policies for vertical applications"},
+        {"id": "d10_m02", "name": "Policy Evaluation", "description": "Domain-specific policies and evaluation mechanisms for AI-integrated solutions"},
+        {"id": "d10_m03", "name": "Policy Extrapolation", "description": "Extrapolation mechanisms for policy interventions with simulated timeline"},
+        {"id": "d10_m04", "name": "Horizontal Policies", "description": "Availability of horizontal generic policies (data sources, AI lifecycle, explainability)"},
+        {"id": "d10_m05", "name": "Community Benefit", "description": "Number of instances where AI enables community benefit with citizen inputs"},
+        {"id": "d10_m06", "name": "Safety Policies", "description": "Policies for safe, responsible, reliable operation of AI"},
+        {"id": "d10_m07", "name": "Explainability Metrics", "description": "Metrics to measure explainability and transparency for accountability"},
+        {"id": "d10_m08", "name": "Policy Case Briefs", "description": "Number of published briefs/case studies turning operational lessons into governance lessons"},
+        {"id": "d10_m09", "name": "Audit Metrics", "description": "Metrics from audits of models, datasets, toolsets for bias, safety, explainability"},
+        {"id": "d10_m10", "name": "Data Sovereignty", "description": "Policies related to ownership and movement of data"}
+      ]
+    },
+    {
+      "id": 11,
+      "name": "AI for Inclusion",
+      "short_name": "ai_inclusion",
+      "description": "Studies bridging divides in society using AI including accessibility, gender divide, and other forms of inclusion across simulation, edge AI, and GenAI.",
+      "mapped_factors": ["sandbox"],
+      "metrics": [
+        {"id": "d11_m01", "name": "Digital Twins", "description": "Number of sandbox environments and capability of simulators"},
+        {"id": "d11_m02", "name": "Sensor Types", "description": "Types of sensors (laser, cameras, gyroscope, obstacle avoidance)"},
+        {"id": "d11_m03", "name": "Edge AI Agents", "description": "Use of agents for user interface, e.g., question answers for navigation"},
+        {"id": "d11_m04", "name": "Edge Hardware", "description": "Hardware availability and affordability at the edge (CPU, GPU, memory, network)"},
+        {"id": "d11_m05", "name": "5G Connectivity", "description": "5G connectivity for edge-to-cloud including coverage"},
+        {"id": "d11_m06", "name": "Edge Privacy", "description": "Standalone edge vs. cloud data transfer privacy"},
+        {"id": "d11_m07", "name": "Language Repository", "description": "Local grammar, dialects, and context for interaction included in language repository"},
+        {"id": "d11_m08", "name": "Regional Language Support", "description": "Offline/local-language access including offline alert kits"},
+        {"id": "d11_m09", "name": "GenAI Customization", "description": "Customizations in presentations (avatar appearances)"},
+        {"id": "d11_m10", "name": "Multi-modal Data", "description": "Different types of data processed (audio, video, images) using standard representations"},
+        {"id": "d11_m11", "name": "Beneficiaries", "description": "Number of users/beneficiaries including sign language support"},
+        {"id": "d11_m12", "name": "Women/Indigenous Leadership", "description": "Women's leadership and indigenous leadership in AI"},
+        {"id": "d11_m13", "name": "Social Inclusion Impact", "description": "Impact of AI on social inclusion decisions"}
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Granular Priorities",
+      "short_name": "granular_priorities",
+      "description": "Measures the availability of granular priorities in adapting AI-based solutions to subsets of users, considering local needs and context.",
+      "mapped_factors": ["deployment"],
+      "metrics": [
+        {"id": "d12_m01", "name": "Regional Priorities", "description": "Regional/domain-specific priorities and focus areas"},
+        {"id": "d12_m02", "name": "Fine-tuned Models", "description": "Fine-tuned workflows and models reflecting regional priorities"},
+        {"id": "d12_m03", "name": "Priority Organization", "description": "Existence of organizational structure for evolution of granular priorities"},
+        {"id": "d12_m04", "name": "Customized Workflows", "description": "Evolution of downstream customized workflows derived from global workflows/models"}
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Digital Infrastructure",
+      "short_name": "digital_infrastructure",
+      "description": "Measures the availability of digital infrastructure including devices, computing capability, connectivity, and energy for AI deployment.",
+      "mapped_factors": ["deployment"],
+      "metrics": [
+        {"id": "d13_m01", "name": "AI-Enabled Devices", "description": "Number/quality/distribution of AI-enabled devices/sensors (ITU-T Y.3172 nodes)"},
+        {"id": "d13_m02", "name": "Data Centers", "description": "Number of data centers and APIs integrated in the overall solution"},
+        {"id": "d13_m03", "name": "Digital Services", "description": "Number of digital services integrated in cloud cross-domain solution"},
+        {"id": "d13_m04", "name": "Edge Infrastructure", "description": "Availability and utilization of edge clouds, compute at edge, connectivity to edge"},
+        {"id": "d13_m05", "name": "Energy Consumption", "description": "Energy consumption at edge, devices, and infrastructure for AI and domain-specific"},
+        {"id": "d13_m06", "name": "Energy Sustainability", "description": "Energy reliability and sustainable energy usage (power usage effectiveness)"},
+        {"id": "d13_m07", "name": "Uptime", "description": "Percentage uptime of towers/cameras and control room feeds"},
+        {"id": "d13_m08", "name": "Area Coverage", "description": "Area covered under AI services including sensors for data collection and actuators"},
+        {"id": "d13_m09", "name": "Network Quality", "description": "Quality of network connectivity (fiber, wireless, 5G coverage) per ITU-R M.2410"}
+      ]
+    }
+  ]
+}

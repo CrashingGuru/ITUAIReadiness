@@ -1,0 +1,37 @@
+Oxford Insights Government AI Readiness Index 2024 - Summary
+
+1. OVERVIEW
+The Government AI Readiness Index, published annually by Oxford Insights, ranks countries on their preparedness to implement AI in public services. The 2024 edition covers 193 countries.
+
+2. PILLARS OF ASSESSMENT
+The index evaluates three main pillars:
+a) Government Pillar:
+   - Vision and governance of AI
+   - Digital capacity and adaptability of government
+   - Data availability and representativeness
+b) Technology Sector Pillar:
+   - Size and maturity of the technology sector
+   - Human capital and innovation capacity
+   - Technology infrastructure
+c) Data and Infrastructure Pillar:
+   - Data availability and quality
+   - Infrastructure for AI deployment
+   - Representativeness of data
+
+3. TOP RANKED COUNTRIES (2024)
+- United States, Singapore, United Kingdom, Finland, Canada, South Korea, Australia, France, Japan, Germany
+
+4. KEY FINDINGS
+- Growing gap between AI leaders and developing economies
+- Data governance remains a critical differentiator
+- Open-source AI adoption accelerating globally
+- National AI strategies increasingly common but implementation varies widely
+- Digital infrastructure remains the biggest barrier for developing economies
+
+5. RELEVANCE TO ITU AI READINESS FRAMEWORK
+- Oxford pillar structure maps to multiple ITU dimensions
+- Government pillar → ITU Dimensions 7 (Strategy), 10 (Policies)
+- Technology pillar → ITU Dimensions 5 (AI Integration), 9 (Human Impact), 13 (Infrastructure)
+- Data pillar → ITU Dimensions 1 (Data Marketplace), 4 (Contextualization)
+- Country rankings provide baseline benchmarks for simulation game scenarios
+- Developing country scores useful as starting points for delegate inputs
