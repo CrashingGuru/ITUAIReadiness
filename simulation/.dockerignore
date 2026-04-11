@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.gitignore
+.env
+*.docx
+data/chromadb/
+data/game.db
+tests/
+AI_Readiness_Simulation_Game_Plan.docx
+~$*

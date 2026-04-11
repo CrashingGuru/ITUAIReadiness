@@ -1,10 +1,6 @@
 # LLM & Embeddings
 ollama>=0.4.0
 
-# Agent Framework
-smolagents>=1.0.0
-litellm>=1.50.0
-
 # Vector Database
 chromadb>=0.5.0
 
@@ -13,24 +9,20 @@ fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
 websockets>=13.0
 
-# Document Parsing
-docling>=2.0.0
-
-# Structured Output
-instructor>=1.0.0
-
 # Database
 sqlmodel>=0.0.22
 
-# CLI / TUI
-textual>=1.0.0
+# CLI
 httpx>=0.28.0
 rich>=13.0.0
 
 # Graph
 networkx>=3.0
 
+# PDF Parsing
+PyMuPDF>=1.24.0
+
 # Utilities
 pydantic>=2.0.0
+pydantic-settings>=2.0.0
 python-multipart>=0.0.12
-aiofiles>=24.0.0

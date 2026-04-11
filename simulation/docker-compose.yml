@@ -1,0 +1,36 @@
+services:
+  # Ollama LLM server
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # GPU support (uncomment for NVIDIA GPU)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # AI Readiness Simulation Game server
+  server:
+    build: .
+    container_name: ai-readiness-server
+    ports:
+      - "8000:8000"
+    environment:
+      - AIREADY_OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - chromadb_data:/app/data/chromadb
+      - game_db:/app/data
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_data:
+  chromadb_data:
+  game_db:
