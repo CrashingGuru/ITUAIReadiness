@@ -1,6 +1,8 @@
 # AI Readiness Simulation Game
 
-An interactive simulation game based on the **ITU AI Readiness Framework 2025** (Report 2.0). Country delegates describe their AI readiness across 13 dimensions, and 6 AI agents analyze, score, and simulate "what-if" policy scenarios using a knowledge base of 27+ national AI strategy documents.
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CrashingGuru/ITUAIReadiness/blob/main/simulation/AI_Readiness_Game_Colab.ipynb)
+
+An interactive simulation game based on the **ITU AI Readiness Framework 2025** (Report 2.0). Country delegates describe their AI readiness across 13 dimensions, and 6 AI agents analyze, score, and simulate "what-if" policy scenarios using a knowledge base of 57+ national AI strategy documents.
 
 ## Features
 
