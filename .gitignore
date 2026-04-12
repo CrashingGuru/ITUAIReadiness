@@ -1,3 +1,8 @@
+# AI Readiness Simulation — generated data
+simulation/data/chromadb/
+simulation/data/game.db
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
