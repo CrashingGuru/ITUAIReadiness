@@ -323,28 +323,45 @@ def ingest_directory(
     collection_name: Optional[str] = None,
     skip_manifest: bool = True,
 ) -> dict[str, int]:
-    """Ingest all supported files from a directory.
+    """Ingest all supported files from a directory (recursively).
 
-    Returns {filename: chunk_count} mapping.
+    Subdirectories are used as document categories. For example files
+    under ``InputDocs/AI_Strategies/`` get ``document_category: AI_Strategies``
+    in their metadata, while ``InputDocs/AI_Use_Cases/`` get
+    ``document_category: AI_Use_Cases``.
+
+    Returns {relative_path: chunk_count} mapping.
     """
     supported = {".pdf", ".txt", ".md", ".csv", ".html"}
     results: dict[str, int] = {}
 
-    files = sorted(directory.iterdir())
-    for filepath in files:
-        if not filepath.is_file():
-            continue
+    # Collect files: top-level + all subdirectories
+    all_files: list[tuple[Path, str]] = []  # (filepath, category)
+    for item in sorted(directory.iterdir()):
+        if item.is_dir():
+            category = item.name  # e.g. "AI_Strategies", "AI_Use_Cases"
+            for sub_file in sorted(item.iterdir()):
+                if sub_file.is_file():
+                    all_files.append((sub_file, category))
+        elif item.is_file():
+            all_files.append((item, "general"))
+
+    for filepath, category in all_files:
         if filepath.suffix.lower() not in supported:
             continue
         if skip_manifest and filepath.name.lower() == "inputs.md":
             continue
 
+        # Build a display key like "AI_Strategies/India_National_AI_Strategy_NITI.pdf"
+        display_key = f"{category}/{filepath.name}" if category != "general" else filepath.name
+        extra_meta = {"document_category": category}
+
         try:
-            count = ingest_file(filepath, kb, collection_name)
-            results[filepath.name] = count
+            count = ingest_file(filepath, kb, collection_name, extra_metadata=extra_meta)
+            results[display_key] = count
         except Exception as e:
-            logger.error("Failed to ingest %s: %s", filepath.name, e)
-            results[filepath.name] = 0
+            logger.error("Failed to ingest %s: %s", display_key, e)
+            results[display_key] = 0
 
     return results
 

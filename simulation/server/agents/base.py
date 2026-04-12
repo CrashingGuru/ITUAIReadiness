@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from typing import Any, Optional
 
 import ollama
@@ -393,9 +394,27 @@ and explain in the gaps field. Always provide a narrative summary."""
             except (ValueError, TypeError) as e:
                 logger.warning("Skipping malformed score in %s: %s", self.name, e)
 
+        # Sanitize dimensions_assessed — LLM may return "Dimension 1" instead of 1
+        raw_dims = data.get("dimensions_assessed", self.dimensions)
+        clean_dims: list[int] = []
+        for d in raw_dims:
+            if isinstance(d, int):
+                clean_dims.append(d)
+            elif isinstance(d, str):
+                m = re.search(r'\d+', d)
+                if m:
+                    clean_dims.append(int(m.group()))
+            else:
+                try:
+                    clean_dims.append(int(d))
+                except (ValueError, TypeError):
+                    pass
+        if not clean_dims:
+            clean_dims = self.dimensions
+
         return AgentResponse(
             agent_name=self.name,
-            dimensions_assessed=data.get("dimensions_assessed", self.dimensions),
+            dimensions_assessed=clean_dims,
             scores=scores,
             narrative=data.get("narrative", ""),
             sources_used=data.get("sources_used", []),

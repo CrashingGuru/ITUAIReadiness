@@ -1,0 +1,91 @@
+Ethiopia National AI Strategy - Summary (Sample for Simulation Testing)
+
+1. COUNTRY CONTEXT
+- Population: ~126 million (2024)
+- GNI per capita: ~1,020 USD (low income)
+- Internet penetration: ~25%
+- Mobile penetration: ~50%
+- ICT skills level: estimated 5-8%
+- 4G coverage: ~40% (urban-centric)
+- 5G coverage: <1%
+
+2. NATIONAL AI STRATEGY HIGHLIGHTS
+- Ethiopia launched its Digital Transformation Strategy in 2020
+- AI is positioned as part of broader digital economy development
+- Key focus sectors: agriculture, healthcare, education, and public services
+- Addis Ababa Science and Technology University leads AI research
+- Partnership with international organizations (ITU, UNESCO, World Bank)
+
+3. DIMENSION-SPECIFIC STATUS (Estimated for Simulation)
+
+Dimension 1 - Data/Model Marketplace (Score: 1.0/5.0):
+- Limited open data portals; some government datasets available
+- Few local AI models; reliance on international models
+- No formal data marketplace ecosystem
+- Amharic language datasets scarce
+
+Dimension 2 - Generated Content Marketplace (Score: 0.5/5.0):
+- Very limited GenAI adoption
+- No local content generation platforms
+- Limited guardrails/regulations for generated content
+
+Dimension 3 - Cross-Domain Correlation (Score: 1.0/5.0):
+- Some cross-domain projects in agriculture-health nexus
+- Limited integrated workflows
+- Domain-specific KPIs exist for agriculture
+
+Dimension 4 - Contextualization (Score: 1.5/5.0):
+- Strong agricultural domain knowledge
+- Local language (Amharic) NLP research emerging
+- Limited local AI patents/innovations
+- Growing number of local tech startups
+
+Dimension 5 - AI Integration in Workflows (Score: 0.5/5.0):
+- AI mostly in pilot/experimental stage
+- Limited automation in government workflows
+- Some AI in banking/fintech sector
+
+Dimension 6 - Human Interface (Score: 1.0/5.0):
+- Limited AI-enabled applications in local language
+- Mobile-first population; chatbot adoption growing
+- Accessibility features limited
+
+Dimension 7 - Strategy Alignment (Score: 1.5/5.0):
+- Digital Transformation Strategy provides top-level vision
+- Coordination between ministries improving
+- Implementation gaps between strategy and execution
+
+Dimension 8 - Collaboration with AI (Score: 0.5/5.0):
+- Limited human-AI co-creation tools
+- Academic research growing but not integrated into practice
+- Traditional knowledge not yet systematically integrated with AI
+
+Dimension 9 - Human Impact (Score: 1.5/5.0):
+- Several universities offering AI/CS programs
+- Skills gap significant; limited certified training
+- Growing awareness of AI among tech community
+- Women in AI initiatives emerging
+
+Dimension 10 - AI & Policies (Score: 1.0/5.0):
+- No dedicated AI policy yet (as of sample date)
+- Data protection proclamation exists
+- No AI-specific sandbox for policy testing
+- Regulatory framework for AI nascent
+
+Dimension 11 - AI for Inclusion (Score: 1.0/5.0):
+- Digital inclusion efforts via mobile platforms
+- Limited accessibility features in government services
+- Gender digital divide significant
+- Rural-urban technology gap large
+
+Dimension 12 - Granular Priorities (Score: 2.0/5.0):
+- Clear national priorities: agriculture, healthcare, education
+- Some fine-tuning of global solutions for local context
+- Agricultural AI priorities well-defined
+
+Dimension 13 - Digital Infrastructure (Score: 1.0/5.0):
+- Ethio Telecom dominates connectivity
+- Limited data center capacity
+- Edge computing infrastructure minimal
+- Power supply unreliable in rural areas
+- Fiber deployment expanding but limited

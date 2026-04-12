@@ -348,7 +348,8 @@ def main():
                     resp = api.clarify(session_id, question)
                 console.print(f"\n[bold cyan]Clarification[/]")
                 console.print(f"Q: [italic]{resp.get('question', question)}[/]")
-                console.print(f"A: {resp.get('answer', 'No answer')}")
+                answer = resp.get('answer', 'No answer')
+                console.print(Panel(answer, title="Answer", border_style="cyan"))
                 console.print(f"Related Dimensions: {resp.get('related_dimensions', [])}")
                 console.print(f"Agent: {resp.get('agent', 'unknown')}")
             except httpx.ReadTimeout:

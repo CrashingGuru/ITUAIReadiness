@@ -1,0 +1,40 @@
+EU AI Act (Regulation 2024/1689) - Summary
+
+1. OVERVIEW
+The EU AI Act is the first comprehensive legal framework on AI worldwide. It entered into force on 1 August 2024 and will be fully applicable by 2 August 2026, with phased implementation.
+
+2. RISK-BASED CLASSIFICATION
+The Act classifies AI systems into four risk tiers:
+a) Unacceptable Risk (Prohibited): Social scoring by governments, real-time biometric identification in public spaces (with exceptions), manipulation techniques, exploitation of vulnerabilities. Effective from Feb 2025.
+b) High Risk: AI in critical infrastructure, education, employment, essential services, law enforcement, migration, justice. Requires conformity assessments, risk management, data governance, transparency, human oversight.
+c) Limited Risk: Chatbots, deepfakes, emotion recognition. Must meet transparency obligations (users must know they interact with AI).
+d) Minimal Risk: Spam filters, AI in video games. No specific obligations.
+
+3. GENERAL PURPOSE AI (GPAI) MODELS
+- All GPAI providers must provide technical documentation, comply with copyright law, publish training data summaries
+- Systemic risk GPAI (>10^25 FLOPs training compute): additional obligations including model evaluations, adversarial testing, incident reporting, cybersecurity measures
+
+4. IMPLEMENTATION TIMELINE
+- Feb 2025: Prohibited practices and AI literacy in force
+- Aug 2025: GPAI model obligations in force
+- Aug 2026: Full application (high-risk AI in regulated products)
+- Aug 2027: Extended transition for some high-risk systems
+
+5. GOVERNANCE STRUCTURE
+- European AI Office (within European Commission)
+- National competent authorities in each EU member state
+- AI Board (representatives from member states)
+- Advisory forum and scientific panel
+
+6. PENALTIES
+- Up to 35M EUR or 7% of global turnover for prohibited AI practices
+- Up to 15M EUR or 3% for high-risk non-compliance
+- Up to 7.5M EUR or 1.5% for incorrect information
+
+7. RELEVANCE TO ITU AI READINESS FRAMEWORK
+- Dimension 10 (AI & Policies): The most comprehensive regulatory framework globally; benchmark for policy evaluation
+- Dimension 7 (Strategy Alignment): EU-wide coordination mechanism
+- Dimension 5 (AI Integration): Compliance requirements affect how AI is integrated in workflows
+- Dimension 1 (Data Marketplace): Data governance requirements for high-risk AI
+- Dimension 6 (Human Interface): Transparency requirements for AI-human interaction
+- Provides a model for developing countries designing AI governance frameworks

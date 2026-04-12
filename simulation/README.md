@@ -14,8 +14,8 @@ An interactive simulation game based on the **ITU AI Readiness Framework 2025** 
 ## Requirements
 
 - **Docker Desktop** (includes Docker Compose)
-- **~8 GB RAM** minimum (for Ollama LLM inference)
-- **~10 GB disk** (for LLM models on first run)
+- **~16 GB RAM** minimum (for Ollama LLM inference with qwen2.5:14b)
+- **~15 GB disk** (for LLM models on first run)
 
 ## Quick Start (Docker)
 
@@ -43,7 +43,7 @@ docker compose exec server bash setup.sh
 ```
 
 This will:
-- Pull `llama3.1:8b` (~4.7 GB) and `nomic-embed-text` (~274 MB) models
+- Pull `qwen2.5:14b` (~4.7 GB) and `nomic-embed-text` (~274 MB) models
 - Ingest 27 seed documents into the Knowledge Base
 
 **This takes 10-20 minutes on first run.** Subsequent starts skip this step.
@@ -99,7 +99,7 @@ docker compose up
        v
 +------------------+     +------------------+
 |  ollama:11434    |<----|  server:8000     |
-|  llama3.1:8b     |     |  FastAPI + 6     |
+|  qwen2.5:14b     |     |  FastAPI + 6     |
 |  nomic-embed-text|     |  AI Agents       |
 +------------------+     |  ChromaDB (KB)   |
                           |  SQLite (sessions)|
@@ -126,7 +126,7 @@ Environment variables (prefix `AIREADY_`):
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `AIREADY_OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama server URL |
-| `AIREADY_LLM_MODEL` | `llama3.1:8b` | LLM model for reasoning |
+| `AIREADY_LLM_MODEL` | `qwen2.5:14b` | LLM model for reasoning |
 | `AIREADY_EMBED_MODEL` | `nomic-embed-text` | Embedding model |
 | `AIREADY_HOST` | `0.0.0.0` | Server bind address |
 | `AIREADY_PORT` | `8000` | Server port |
@@ -147,7 +147,7 @@ docker compose down -v       # stop and delete all data (models, KB, sessions)
 ```bash
 # 1. Install Ollama: https://ollama.com/download
 # 2. Pull models
-ollama pull llama3.1:8b
+ollama pull qwen2.5:14b
 ollama pull nomic-embed-text
 
 # 3. Install Python deps

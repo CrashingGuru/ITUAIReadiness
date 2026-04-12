@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     # Ollama
     ollama_base_url: str = "http://localhost:11434"
-    llm_model: str = "llama3.1:8b"
+    llm_model: str = "qwen2.5:14b"
     embed_model: str = "nomic-embed-text"
 
     # Paths

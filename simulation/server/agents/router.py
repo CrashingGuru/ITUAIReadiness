@@ -143,7 +143,7 @@ class AgentRouter:
                 logger.error("Agent %s failed: %s", agent_cls.name, e)
 
         # Merge responses
-        return self._merge_responses(responses, query)
+        return self._merge_responses(responses, query, interaction_type)
 
     def _infer_dimensions(self, query: str) -> list[int]:
         """Infer relevant dimensions from query keywords."""
@@ -162,10 +162,12 @@ class AgentRouter:
         self,
         responses: list[AgentResponse],
         query: str,
+        interaction_type: str = "assessment",
     ) -> AgentResponse:
         """Merge multiple agent responses into a single response.
 
         For overlapping dimensions, keeps the score with higher confidence.
+        Clarifications get longer narratives since they are explanatory.
         """
         if not responses:
             return AgentResponse(
@@ -179,6 +181,9 @@ class AgentRouter:
         if len(responses) == 1:
             return responses[0]
 
+        # Clarifications get full narratives; assessments are truncated
+        max_narrative = 300 if interaction_type == "assessment" else 2500
+
         # Merge scores — for overlapping dimensions, pick highest confidence
         best_scores: dict[int, DimensionScore] = {}
         all_dims: set[int] = set()
@@ -189,19 +194,25 @@ class AgentRouter:
             all_dims.update(resp.dimensions_assessed)
             all_sources.update(resp.sources_used)
             if resp.narrative:
-                # Truncate per-agent narrative to keep merged output manageable
-                narratives.append(f"[{resp.agent_name}] {resp.narrative[:300]}")
+                narratives.append(resp.narrative[:max_narrative])
 
             for score in resp.scores:
                 dim_id = score.dimension_id
                 if dim_id not in best_scores or score.confidence > best_scores[dim_id].confidence:
                     best_scores[dim_id] = score
 
+        # For clarifications and what-if, pick the best (longest) narrative
+        # For assessments, join all agent narratives
+        if interaction_type in ("clarification", "whatif") and narratives:
+            merged_narrative = max(narratives, key=len)
+        else:
+            merged_narrative = " | ".join(narratives)
+
         return AgentResponse(
             agent_name="router_merged",
             dimensions_assessed=sorted(all_dims),
             scores=sorted(best_scores.values(), key=lambda s: s.dimension_id),
-            narrative=" | ".join(narratives),
+            narrative=merged_narrative,
             sources_used=sorted(all_sources),
         )
 

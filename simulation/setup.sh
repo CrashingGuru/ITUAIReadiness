@@ -21,8 +21,8 @@ echo "Ollama is ready!"
 echo ""
 
 # Pull required models
-echo "Pulling LLM model (llama3.1:8b) — this may take a few minutes on first run..."
-curl -sf "$OLLAMA_URL/api/pull" -d '{"name":"llama3.1:8b"}' | while IFS= read -r line; do
+echo "Pulling LLM model (qwen2.5:14b) — this may take a few minutes on first run..."
+curl -sf "$OLLAMA_URL/api/pull" -d '{"name":"qwen2.5:14b"}' | while IFS= read -r line; do
     status=$(echo "$line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('status',''))" 2>/dev/null || true)
     [ -n "$status" ] && echo "  $status"
 done
