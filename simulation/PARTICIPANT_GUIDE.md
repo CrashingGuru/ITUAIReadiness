@@ -10,6 +10,7 @@ Welcome! This guide walks you through running the AI Readiness Simulation Game o
 |-------------|-------|
 | **16 GB RAM minimum** | 24 GB recommended for the default `qwen2.5:14b` model |
 | **~15 GB free disk** | Ollama image + LLM model + embeddings + knowledge base |
+| **Git** | For cloning the repository |
 | **Docker Desktop** | Mac, Windows, or Linux |
 | **Python 3.9+** | For the CLI client only (the server runs in Docker) |
 | **~30 min first-time setup** | Mostly download time for the LLM |
@@ -18,7 +19,49 @@ If your machine has less than 16 GB RAM, see the [troubleshooting section](#trou
 
 ---
 
-## Step 1 — Install Docker Desktop
+## Step 1 — Install Git
+
+Git is used to download (clone) the project from GitHub.
+
+### Mac
+
+Git usually comes pre-installed. Check:
+```bash
+git --version
+```
+If you get a prompt to install the Xcode Command Line Tools, accept it — that includes Git. Alternatively:
+```bash
+brew install git            # if you have Homebrew
+```
+
+### Windows
+
+Download and install **Git for Windows** from https://git-scm.com/download/win
+
+Accept the defaults in the installer. This gives you:
+- `git` on the command line
+- **Git Bash** — a terminal where all the `bash`/`curl` commands in this guide work exactly as shown
+
+**On Windows, use Git Bash (not Command Prompt or PowerShell) for the rest of this guide.**
+
+### Linux
+
+```bash
+sudo apt-get install -y git            # Debian / Ubuntu
+sudo dnf install -y git                # Fedora / RHEL
+sudo pacman -S git                     # Arch
+```
+
+### Verify
+
+```bash
+git --version
+```
+Expected: `git version 2.x.x` or newer.
+
+---
+
+## Step 2 — Install Docker Desktop
 
 - **Mac / Windows**: Download from https://www.docker.com/products/docker-desktop and launch the app.
 - **Linux**: `curl -fsSL https://get.docker.com | sh` and then `sudo systemctl start docker`.
@@ -31,7 +74,7 @@ docker compose version
 
 ---
 
-## Step 2 — Clone the repository
+## Step 3 — Clone the repository
 
 ```bash
 git clone https://github.com/CrashingGuru/ITUAIReadiness.git
@@ -40,7 +83,7 @@ cd ITUAIReadiness/simulation
 
 ---
 
-## Step 3 — Start the Docker services
+## Step 4 — Start the Docker services
 
 ```bash
 docker compose up -d
@@ -61,7 +104,7 @@ You should see both services with status `running`.
 
 ---
 
-## Step 4 — Pull the LLM + ingest documents (one-time)
+## Step 5 — Pull the LLM + ingest documents (one-time)
 
 ```bash
 bash setup.sh
@@ -82,7 +125,7 @@ This script will:
 
 ---
 
-## Step 5 — Verify the server is up
+## Step 6 — Verify the server is up
 
 ```bash
 curl http://localhost:8000/health
@@ -95,7 +138,7 @@ Expected response:
 
 ---
 
-## Step 6 — Install the CLI client (one-time)
+## Step 7 — Install the CLI client (one-time)
 
 The CLI runs on your host (not in Docker) so you get a nice interactive terminal:
 
@@ -110,7 +153,7 @@ python3 -m pip install httpx rich
 
 ---
 
-## Step 7 — Run the game
+## Step 8 — Run the game
 
 ```bash
 python3 -m cli.app
