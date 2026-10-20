@@ -350,7 +350,7 @@ def main():
     console.print("[green]Server connected.[/]\n")
 
     # Registration
-    country = Prompt.ask("[cyan]Country name[/]", default="Ethiopia")
+    country = Prompt.ask("[cyan]Country name[/]", default="UAE")
     delegate = Prompt.ask("[cyan]Delegate name[/]", default="Delegate")
 
     with console.status("Registering..."):

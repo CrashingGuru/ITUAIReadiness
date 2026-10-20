@@ -160,7 +160,7 @@ python3 -m cli.app
 ```
 
 You'll be prompted for:
-- **Country name** (e.g., "Ethiopia")
+- **Country name** (e.g., "UAE")
 - **Delegate name** (your name)
 
 Then type `help` to see all available commands.
@@ -192,26 +192,26 @@ Then type `help` to see all available commands.
 ## Example session
 
 ```
-Country name: Ethiopia
+Country name: UAE
 Delegate name: alice
 
-Ethiopia: standardise
+UAE: standardise
 Describe your AI use case.
-> IoT-based livestock health monitoring for proactive disease prediction
-> in rural animal husbandry operations.
+> Smart city traffic management using computer vision at intersections
+> and edge-AI inference for adaptive signal control.
 
 [Agent analyses use case against Y.3172 pipeline — SRC, C, PP, M, P, D, SINK, MLFO, Sandbox]
 
-Ethiopia: readiness
+UAE: readiness
 Describe your AI use case to analyse its readiness impact.
 > Same use case as above.
 
 [Routes to 5 agents — scores 13 dimensions — propagates causal effects]
 
-Ethiopia: dashboard
+UAE: dashboard
 [Shows current scores for all 13 dimensions]
 
-Ethiopia: quit
+UAE: quit
 ```
 
 ---
