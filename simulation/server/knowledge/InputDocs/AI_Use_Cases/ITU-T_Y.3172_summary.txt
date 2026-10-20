@@ -3,31 +3,59 @@ ITU-T Y.3172: Architectural Framework for Machine Learning in Future Networks In
 Summary of Key Content (referenced in the AI Readiness Framework):
 
 1. SCOPE
-ITU-T Y.3172 specifies the architectural framework for machine learning (ML) in future networks including IMT-2020. It defines the ML pipeline architecture with nodes and interfaces for integrating ML into network operations.
+ITU-T Y.3172 specifies an architectural framework for machine learning (ML) in future networks including IMT-2020. It defines the ML pipeline architecture with nodes and interfaces for integrating ML into network operations.
 
-2. ML PIPELINE NODES
-The standard defines several key nodes in the ML pipeline:
-- SRC (Source): Data collection points that gather raw data from network elements
-- ML Function: Where ML models are trained, validated, and execute inference
-- SINK: Where inference results are applied (actuators, control plane)
-- Sandbox: Validation environment for testing ML models before deployment
-- Collector: Aggregates data from multiple sources
-- Preprocessor: Cleans and transforms raw data for ML consumption
+2. ML PIPELINE NODES (from Figure 3, Section 8.1)
+The standard defines 7 nodes in the ML pipeline plus 2 supporting components:
 
-3. ML PIPELINE ARCHITECTURE
-The pipeline follows: SRC → Collector → Preprocessor → Model Training → Model Evaluation → SINK
-With a Sandbox node for validation parallel to the main pipeline.
+Pipeline Nodes (in order):
+- SRC (Source): The source of data that can be used as input to the ML pipeline. Potential SRC nodes include user equipment (UE), session management function (SMF), and application function (AF).
+- C (Collector): Responsible for collecting data from one or more SRC nodes. A collector node may have the capability to configure SRC nodes (e.g., control the nature of data, its granularity and periodicity).
+- PP (Pre-processor): Responsible for data cleaning, transformation, normalisation, and feature engineering. Prepares raw data for ML consumption. May also perform data format conversion.
+- M (Model): Where ML models are trained, validated, and execute inference. Includes model selection, training, evaluation, and serving. Supports supervised, unsupervised, and reinforcement learning.
+- P (Policy): Enforces policies on ML output before distribution. Ensures ML decisions comply with network operator policies, safety constraints, and regulatory requirements.
+- D (Distributor): Distributes the output of the ML model to one or more SINK nodes. Handles routing of ML results to appropriate targets.
+- SINK (Target of ML output): Where inference results are applied — actuators, control plane, decision systems, dashboards, or feedback loops. ML output may be policies or configurations applied to the network.
 
-4. INTERFACES
-- Interface between SRC and Collector (data ingestion)
-- Interface between ML Function and SINK (inference delivery)
-- Interface between Sandbox and ML Function (model validation)
+Supporting Components:
+- MLFO (ML Function Orchestrator): A logical node that manages and orchestrates all nodes in the ML pipeline. Receives ML intent as input and coordinates the pipeline execution.
+- ML Sandbox: A validation environment where ML models can be trained, tested, and their effects on the network evaluated. Uses simulated ML underlay networks. Designed to prevent ML applications from affecting the live network.
 
-5. RELEVANCE TO AI READINESS FRAMEWORK
-- Dimension 5 (AI Integration in Workflows): Y.3172 provides the standard pipeline for AI integration
-- Dimension 10 (AI & Policies): References Y.3172 for policy evaluation in AI lifecycle
-- Dimension 13 (Digital Infrastructure): Y.3172 nodes map to physical infrastructure requirements
-- The AI pipeline stages (SRC, training, SINK, Sandbox) map to the 6 factors: data → SRC, research → training, deployment → SINK, sandbox → Sandbox
+3. ML PIPELINE FLOW
+Pipeline: SRC → C → PP → M → P → D → SINK
+With ML Sandbox running in parallel using simulated underlay networks.
+MLFO orchestrates the entire pipeline based on ML intent.
 
-6. ENERGY CONSIDERATIONS
-The standard also addresses energy characteristics of pipeline nodes, relevant to Energy AI Readiness metrics.
+4. DATA HANDLING REFERENCE POINTS
+The architecture defines 4 data handling reference points:
+- Reference Point 1: Between SINK and ML underlay networks (data output)
+- Reference Point 2: Between ML Sandbox and simulated ML underlay networks
+- Reference Point 3: Between SRC and ML underlay networks (data input)
+- Reference Point 4: Between SINK and ML underlay networks
+
+5. HIGH-LEVEL ARCHITECTURAL REQUIREMENTS (Section 7)
+Five categories of requirements:
+- REQ-ML-COR: Enablers for correlation — support correlation of data from multiple sources, multiple technologies, distributed instantiation
+- REQ-ML-DEP: Enablers for deployment — define interaction points, support split/combined deployments, flexible placement, plug-and-play data sources
+- REQ-ML-INT: Interface-related — support model transfer, data transfer for training, standard APIs, data sharing mechanisms
+- REQ-ML-SPEC: Declarative specifications — standard ML application representation, specification of data sources/model repos/targets/constraints, flexible split, third-party specifications
+- REQ-ML-MNG: Management of ML functionalities — model selection, training/updates, monitoring, orchestration, flexible chaining
+
+6. RELEVANCE TO AI READINESS FRAMEWORK
+- Dimension 1 (Data/Model Marketplace): SRC and C nodes relate to data collection and marketplace infrastructure
+- Dimension 3 (Cross-Domain Correlation): REQ-ML-COR requirements directly map to cross-domain data correlation
+- Dimension 5 (AI Integration in Workflows): The full pipeline (SRC→C→PP→M→P→D→SINK) provides the standard for AI integration
+- Dimension 7 (Strategy Alignment): MLFO and ML intent map to strategic coordination and intent-based management
+- Dimension 10 (AI & Policies): P (Policy) node and ML Sandbox map to policy evaluation and sandboxing in AI lifecycle
+- Dimension 13 (Digital Infrastructure): Y.3172 nodes map to physical infrastructure requirements (compute, networking, edge)
+
+Node-to-Factor Mapping:
+- Data factor → SRC, C, PP (data collection, aggregation, preparation)
+- Research factor → M (model training, validation, evaluation)
+- Standards factor → P, MLFO (policy enforcement, orchestration standards)
+- Deployment factor → D, SINK (distribution, deployment of ML output)
+- Sandbox factor → ML Sandbox (testing in simulated environments)
+- OpenSource factor → M (open-source model availability, model marketplace)
+
+7. ENERGY CONSIDERATIONS
+The standard also addresses energy characteristics of pipeline nodes, relevant to Energy AI Readiness metrics under Dimension 13.

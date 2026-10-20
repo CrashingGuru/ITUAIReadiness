@@ -366,6 +366,41 @@ def ingest_directory(
     return results
 
 
+def ingest_usecase_docs(kb: KnowledgeBase, directory: Optional[Path] = None) -> dict[str, int]:
+    """Ingest AI_Use_Cases documents into the dedicated kb_usecase collection.
+
+    These docs contain Y.3172 pipeline definitions and real-world AI use cases
+    used by the UseCaseAgent for standardisation and readiness analysis.
+    """
+    usecase_dir = directory or (settings.input_docs_dir / "AI_Use_Cases")
+    if not usecase_dir.exists():
+        logger.warning("AI_Use_Cases directory not found at %s", usecase_dir)
+        return {}
+
+    supported = {".pdf", ".txt", ".md", ".csv", ".html"}
+    results: dict[str, int] = {}
+
+    for filepath in sorted(usecase_dir.iterdir()):
+        if not filepath.is_file() or filepath.suffix.lower() not in supported:
+            continue
+        if filepath.name.lower() == "inputs.md":
+            continue
+
+        extra_meta = {"document_category": "AI_Use_Cases"}
+        try:
+            count = ingest_file(
+                filepath, kb,
+                collection_name=settings.kb_usecase_collection,
+                extra_metadata=extra_meta,
+            )
+            results[filepath.name] = count
+        except Exception as e:
+            logger.error("Failed to ingest %s into usecase KB: %s", filepath.name, e)
+            results[filepath.name] = 0
+
+    return results
+
+
 def ingest_framework_definitions(kb: KnowledgeBase) -> int:
     """Load dimensions.json into the kb_framework collection.
 
@@ -504,6 +539,18 @@ def main():
             print(f"  {filename:50s} {status}")
             total += count
         print(f"\nTotal: {total} chunks from {len(results)} files")
+
+    # Also ingest AI_Use_Cases into kb_usecase collection
+    usecase_dir = settings.input_docs_dir / "AI_Use_Cases"
+    if usecase_dir.exists():
+        print(f"\n--- Ingesting Use Case documents into kb_usecase ---")
+        uc_results = ingest_usecase_docs(kb)
+        uc_total = 0
+        for fname, cnt in sorted(uc_results.items()):
+            status = f"{cnt} chunks" if cnt > 0 else "SKIPPED"
+            print(f"  {fname:50s} {status}")
+            uc_total += cnt
+        print(f"\nUse Case KB: {uc_total} chunks from {len(uc_results)} files")
 
     print(f"\nKB stats: {kb.stats()}")
 

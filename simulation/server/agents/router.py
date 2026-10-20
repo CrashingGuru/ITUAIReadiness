@@ -50,6 +50,10 @@ _KEYWORD_DIMENSION_HINTS: list[tuple[list[str], list[int]]] = [
     (["inclusion", "digital twin", "edge ai", "sign language", "gender"], [11]),
     (["priority", "fine-tune", "customization", "domain-specific"], [12]),
     (["infrastructure", "5g", "connectivity", "data center", "energy", "compute"], [13]),
+    # Use case / Y.3172 pipeline keywords
+    (["use case", "pipeline", "iot", "sensor", "deployment", "y.3172"], [1, 5, 13]),
+    (["animal husbandry", "agriculture", "farming", "crop", "livestock"], [1, 4, 5, 12]),
+    (["disease", "health", "prevention", "monitoring", "diagnostic"], [3, 5, 11]),
 ]
 
 
@@ -182,7 +186,7 @@ class AgentRouter:
             return responses[0]
 
         # Clarifications get full narratives; assessments are truncated
-        max_narrative = 300 if interaction_type == "assessment" else 2500
+        max_narrative = 2500
 
         # Merge scores — for overlapping dimensions, pick highest confidence
         best_scores: dict[int, DimensionScore] = {}

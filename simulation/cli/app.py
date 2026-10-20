@@ -68,6 +68,16 @@ class APIClient:
             "decision_text": text,
         }).json()
 
+    def standardise(self, sid: str, usecase_text: str) -> dict:
+        return self._http.post(f"/game/{sid}/standardise", json={
+            "usecase_text": usecase_text,
+        }).json()
+
+    def readiness(self, sid: str, usecase_text: str) -> dict:
+        return self._http.post(f"/game/{sid}/readiness", json={
+            "usecase_text": usecase_text,
+        }).json()
+
     def impact_preview(self, sid: str, dim: int, delta: float) -> dict:
         return self._http.post(
             f"/game/{sid}/impact-preview",
@@ -102,16 +112,18 @@ def show_banner():
 def show_help():
     console.print(Panel(
         "[bold]Commands:[/]\n\n"
-        "  [cyan]assess[/]    — Submit your country scenario for assessment (F2)\n"
-        "  [cyan]clarify[/]   — Ask a clarification about the framework (F3)\n"
-        "  [cyan]whatif[/]    — Run a what-if analysis on a policy change (F4)\n"
-        "  [cyan]decide[/]    — Announce a policy/strategy decision (F5)\n"
-        "  [cyan]dashboard[/] — View current dimension scores (F6)\n"
-        "  [cyan]impact[/]    — Preview causal impact of a dimension change\n"
-        "  [cyan]agents[/]    — List available agents\n"
-        "  [cyan]stats[/]     — Show game statistics\n"
-        "  [cyan]help[/]      — Show this help\n"
-        "  [cyan]quit[/]      — Exit the game\n\n"
+        "  [bold magenta]standardise[/] — Standardise your use case against Y.3172 pipeline (F1)\n"
+        "  [bold magenta]readiness[/]   — Analyse your use case's readiness impact (F2)\n"
+        "  [cyan]assess[/]      — Submit your country scenario for assessment (F3)\n"
+        "  [cyan]clarify[/]     — Ask a clarification about the framework (F4)\n"
+        "  [cyan]whatif[/]      — Run a what-if analysis on a policy change (F5)\n"
+        "  [cyan]decide[/]      — Announce a policy/strategy decision (F6)\n"
+        "  [cyan]dashboard[/]   — View current dimension scores (F7)\n"
+        "  [cyan]impact[/]      — Preview causal impact of a dimension change\n"
+        "  [cyan]agents[/]      — List available agents\n"
+        "  [cyan]stats[/]       — Show game statistics\n"
+        "  [cyan]help[/]        — Show this help\n"
+        "  [cyan]quit[/]        — Exit the game\n\n"
         "[bold]13 Dimensions:[/]\n" +
         "\n".join(f"  D{k:2d}: {v}" for k, v in DIM_NAMES.items()),
         title="Help",
@@ -152,6 +164,95 @@ def show_scores_table(scores: dict):
             f"{info.get('confidence', 0):.0%}" if score is not None else "---",
         )
     console.print(table)
+
+
+def show_standardise(resp: dict, country: str):
+    console.print(f"\n[bold magenta]Use Case Standardisation — {country}[/]")
+    console.print(f"Use Case: [bold]{resp.get('use_case_name', 'Unknown')}[/]")
+    console.print(f"Domain: {resp.get('use_case_domain', 'N/A')}")
+    console.print(f"Pipeline Maturity: [bold]{resp.get('pipeline_maturity', 'Unknown')}[/]\n")
+
+    # Pipeline nodes table
+    nodes = resp.get("pipeline_nodes", {})
+    if nodes:
+        table = Table(title="Y.3172 Pipeline Mapping", show_header=True, header_style="bold magenta")
+        table.add_column("Node", width=14)
+        table.add_column("Status", width=16)
+        table.add_column("Description", width=55)
+
+        status_colors = {"well-defined": "green", "partially-defined": "yellow", "missing": "red"}
+        for node_name in ["SRC", "C", "PP", "M", "P", "D", "SINK", "MLFO", "Sandbox"]:
+            node = nodes.get(node_name, {})
+            status = node.get("status", "missing")
+            color = status_colors.get(status, "dim")
+            desc = node.get("description", "Not specified")[:55]
+            table.add_row(node_name, Text(status, style=color), desc)
+        console.print(table)
+
+    # Requirements
+    reqs = resp.get("requirements", {})
+    if reqs:
+        console.print("\n[bold]Requirements per Pipeline Node:[/]")
+        for node_name, req_list in reqs.items():
+            if req_list:
+                console.print(f"  [cyan]{node_name}:[/]")
+                for r in req_list[:3]:
+                    console.print(f"    • {r}")
+
+    # Gaps
+    gaps = resp.get("gaps", [])
+    if gaps:
+        console.print("\n[bold red]Gaps Identified:[/]")
+        for g in gaps:
+            console.print(f"  ⚠ {g}")
+
+    # Dimension impacts
+    dim_impacts = resp.get("dimension_impacts", [])
+    if dim_impacts:
+        console.print("\n[bold]Dimension Impacts:[/]")
+        for di in dim_impacts:
+            dim_id = di.get("dimension_id", "?")
+            dname = di.get("dimension_name", DIM_NAMES.get(int(dim_id), f"D{dim_id}"))
+            impact = di.get("impact", "")
+            node = di.get("pipeline_node", "")
+            console.print(f"  D{dim_id} ({dname}) via {node}: {impact[:80]}")
+
+    # Narrative
+    narrative = resp.get("narrative", "")
+    if narrative:
+        console.print(Panel(narrative, title="Analysis", border_style="magenta"))
+
+
+def show_readiness(resp: dict, country: str):
+    console.print(f"\n[bold magenta]Use Case Readiness Impact — {country}[/]")
+    console.print(f"Use Case: [italic]{resp.get('use_case', '')[:100]}[/]\n")
+
+    comp = resp.get("comparison", {})
+    if isinstance(comp, dict) and "dimensions" in comp:
+        console.print(f"Overall: {comp.get('overall_before', 0):.2f} → {comp.get('overall_after', 0):.2f} ({comp.get('overall_delta', 0):+.2f})")
+
+        improved = comp.get("improved", [])
+        if improved:
+            console.print("\n[green]Improved Dimensions:[/]")
+            for d in improved:
+                console.print(f"  D{d['dimension_id']} {d['dimension_name']}: {d['before']:.1f} → {d['after']:.1f} ({d['delta']:+.2f})")
+
+        declined = comp.get("declined", [])
+        if declined:
+            console.print("\n[red]Declined Dimensions:[/]")
+            for d in declined:
+                console.print(f"  D{d['dimension_id']} {d['dimension_name']}: {d['before']:.1f} → {d['after']:.1f} ({d['delta']:+.2f})")
+
+    causal = resp.get("causal_effects", {})
+    if causal:
+        console.print("\n[yellow]Causal Cascade Effects:[/]")
+        for dim_id, effect in causal.items():
+            dname = DIM_NAMES.get(int(dim_id), f"D{dim_id}")
+            console.print(f"  D{dim_id} ({dname}): {effect:+.3f}")
+
+    narrative = resp.get("agent_narrative", "")
+    if narrative:
+        console.print(Panel(narrative, title="Agent Analysis", border_style="magenta"))
 
 
 def show_assessment(resp: dict, country: str):
@@ -205,7 +306,7 @@ def show_whatif(resp: dict, country: str):
 
     narrative = resp.get("agent_narrative", "")
     if narrative:
-        console.print(f"\n[dim]Agent Analysis:[/] {narrative[:500]}")
+        console.print(Panel(narrative, title="Agent Analysis", border_style="dim"))
 
 
 def show_decision(resp: dict, country: str):
@@ -224,7 +325,7 @@ def show_decision(resp: dict, country: str):
 
     narrative = resp.get("agent_narrative", "")
     if narrative:
-        console.print(f"\n[dim]Agent Analysis:[/] {narrative[:500]}")
+        console.print(Panel(narrative, title="Agent Analysis", border_style="dim"))
 
 
 # ---------------------------------------------------------------------------
@@ -309,6 +410,63 @@ def main():
                         console.print(f"  - {d['text'][:70]}")
             else:
                 console.print("[yellow]No scenario assessed yet. Use 'assess' first.[/]")
+
+        elif cmd in ("standardise", "standardize", "std"):
+            console.print("[dim]Describe your AI use case.[/]")
+            console.print("[dim]Include details about data sources, ML models, deployment targets, etc.[/]")
+            console.print("[dim]Type your description (press Enter twice to submit):[/]\n")
+
+            lines = []
+            while True:
+                try:
+                    line = input()
+                except EOFError:
+                    break
+                if line == "" and lines and lines[-1] == "":
+                    lines.pop()
+                    break
+                lines.append(line)
+            text = "\n".join(lines).strip()
+            if not text:
+                console.print("[yellow]No input provided.[/]")
+                continue
+
+            try:
+                with console.status("[bold]Standardising use case against Y.3172 pipeline (UseCase Agent)...[/]"):
+                    resp = api.standardise(session_id, text)
+                show_standardise(resp, country)
+            except httpx.ReadTimeout:
+                console.print("[red]Standardisation timed out. Try again.[/]")
+            except Exception as e:
+                console.print(f"[red]Standardisation failed: {e}[/]")
+
+        elif cmd in ("readiness", "ready", "ucr"):
+            console.print("[dim]Describe your AI use case to analyse its readiness impact.[/]")
+            console.print("[dim]Type your description (press Enter twice to submit):[/]\n")
+
+            lines = []
+            while True:
+                try:
+                    line = input()
+                except EOFError:
+                    break
+                if line == "" and lines and lines[-1] == "":
+                    lines.pop()
+                    break
+                lines.append(line)
+            text = "\n".join(lines).strip()
+            if not text:
+                console.print("[yellow]No input provided.[/]")
+                continue
+
+            try:
+                with console.status("[bold]Analysing use case readiness impact (UseCase Agent + Readiness Agents + Causal Graph)...[/]"):
+                    resp = api.readiness(session_id, text)
+                show_readiness(resp, country)
+            except httpx.ReadTimeout:
+                console.print("[red]Readiness analysis timed out. Try again.[/]")
+            except Exception as e:
+                console.print(f"[red]Readiness analysis failed: {e}[/]")
 
         elif cmd == "assess":
             console.print("[dim]Describe your country's AI readiness status.[/]")

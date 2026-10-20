@@ -63,6 +63,10 @@ class KnowledgeBase:
     def decisions(self) -> chromadb.Collection:
         return self._col(settings.kb_decisions_collection)
 
+    @property
+    def usecase(self) -> chromadb.Collection:
+        return self._col(settings.kb_usecase_collection)
+
     # ------------------------------------------------------------------
     # Write operations
     # ------------------------------------------------------------------
@@ -241,6 +245,7 @@ class KnowledgeBase:
             "kb_main": self.main.count(),
             "kb_framework": self.framework.count(),
             "kb_decisions": self.decisions.count(),
+            "kb_usecase": self.usecase.count(),
         }
 
     def delete_collection(self, collection_name: str) -> None:
@@ -255,6 +260,7 @@ class KnowledgeBase:
             settings.kb_main_collection,
             settings.kb_framework_collection,
             settings.kb_decisions_collection,
+            settings.kb_usecase_collection,
         ]:
             try:
                 self._client.delete_collection(name)

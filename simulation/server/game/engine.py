@@ -13,6 +13,7 @@ import logging
 from typing import Any, Optional
 
 from server.agents.router import AgentRouter
+from server.agents.usecase import UseCaseAgent
 from server.game.causal_graph import CausalGraph
 from server.game.scoring import (
     aggregate_agent_responses,
@@ -48,6 +49,7 @@ class GameEngine:
         self.sessions = SessionManager()
         self.causal = CausalGraph()
         self.router = AgentRouter(kb=self.kb, cache=self.cache)
+        self.usecase_agent = UseCaseAgent(kb=self.kb, cache=self.cache)
 
     # ------------------------------------------------------------------
     # 1. Session management
@@ -366,6 +368,127 @@ class GameEngine:
             "affected_dimensions": affected_dims,
             "updated_summary": scenario_summary(new_scenario),
             "comparison": comparison,
+            "agent_narrative": response.narrative,
+        }
+
+    # ------------------------------------------------------------------
+    # 6. Standardise Use Case (Y.3172 pipeline mapping)
+    # ------------------------------------------------------------------
+
+    def standardise_usecase(
+        self,
+        session_id: str,
+        usecase_text: str,
+    ) -> dict[str, Any]:
+        """Standardise a use case against the ITU-T Y.3172 ML pipeline.
+
+        The UseCaseAgent analyses the use case and maps it to the 6
+        pipeline nodes (SRC, Collector, Preprocessor, ML Function, SINK,
+        Sandbox), generates requirements, and identifies gaps.
+        """
+        session = self.sessions.get_session(session_id)
+        if not session:
+            raise ValueError(f"Session {session_id} not found")
+
+        logger.info("Standardising use case for %s", session.country_name)
+
+        result = self.usecase_agent.standardise(
+            usecase_text, country=session.country_name,
+        )
+
+        result["country"] = session.country_name
+        result["session_id"] = session_id
+        return result
+
+    # ------------------------------------------------------------------
+    # 7. Use Case Readiness Impact
+    # ------------------------------------------------------------------
+
+    def usecase_readiness(
+        self,
+        session_id: str,
+        usecase_text: str,
+    ) -> dict[str, Any]:
+        """Analyse a use case's impact on AI Readiness dimensions.
+
+        Flow:
+        1. Route through standard agents (same as what-if) for dimension scoring
+        2. Causal graph propagates effects to dependent dimensions
+        3. Compared against current scores
+        """
+        session = self.sessions.get_session(session_id)
+        if not session:
+            raise ValueError(f"Session {session_id} not found")
+
+        current_scenario = self.sessions.load_scenario(session_id)
+        logger.info("Use case readiness for %s: %s", session.country_name, usecase_text[:100])
+
+        # 1. Route through standard agents via what-if flow
+        cache_id = self.cache.create_session(session_id)
+
+        try:
+            query_embedding = embed_texts([usecase_text])[0]
+            kb_results = self.kb.search(
+                query_embedding=query_embedding,
+                n_results=20,
+            )
+            self.cache.populate_from_kb(cache_id, kb_results)
+
+            # Route to standard agents
+            response = self.router.whatif(
+                question=f"USE CASE READINESS ANALYSIS: {usecase_text}",
+                country=session.country_name,
+                cache_id=cache_id,
+            )
+
+            # 2. Build projected scenario
+            projected = aggregate_agent_responses(
+                responses=[response],
+                country_name=session.country_name,
+                delegate_id=session_id,
+                raw_input=usecase_text,
+            )
+
+            # 3. Causal propagation
+            causal_effects = {}
+            if current_scenario:
+                current_map = {d.dimension_id: d.score for d in current_scenario.dimensions}
+                direct_changes: dict[int, float] = {}
+                for dim in projected.dimensions:
+                    if dim.confidence > 0:
+                        old = current_map.get(dim.dimension_id, 0)
+                        delta = dim.score - old
+                        if abs(delta) > 0.01:
+                            direct_changes[dim.dimension_id] = delta
+
+                if direct_changes:
+                    propagated_scores = self.causal.apply_propagation(
+                        current_scenario.dimensions,
+                        direct_changes,
+                    )
+                    projected.dimensions = propagated_scores
+                    projected.compute_overall()
+
+                    all_effects = self.causal.propagate(direct_changes)
+                    causal_effects = {
+                        str(k): round(v, 3)
+                        for k, v in all_effects.items()
+                        if k not in direct_changes and abs(v) >= 0.01
+                    }
+
+                comparison = compare_scenarios(current_scenario, projected)
+            else:
+                comparison = {"note": "No baseline scenario — showing absolute scores"}
+
+        finally:
+            self.cache.discard_session(cache_id)
+
+        return {
+            "use_case": usecase_text,
+            "country": session.country_name,
+            "projected_summary": scenario_summary(projected),
+            "comparison": comparison,
+            "causal_effects": causal_effects,
             "agent_narrative": response.narrative,
         }
 

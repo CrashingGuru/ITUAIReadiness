@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from server.config import settings
 from server.database import create_db_and_tables
-from server.routes import dashboard, decisions, delegates, query, whatif
+from server.routes import dashboard, decisions, delegates, query, usecase, whatif
 
 logging.basicConfig(
     level=logging.INFO,
@@ -86,8 +86,10 @@ app = FastAPI(
         "Multi-delegate simulation game for ITU AI Readiness Framework assessment.\n\n"
         "**Delegates** register, submit country scenarios, ask clarifications, "
         "run what-if analyses, and announce policy decisions.\n\n"
-        "**6 AI Agents** (Dataset, OpenSource, Sandbox, Research, Deployment, Standards) "
-        "assess 13 dimensions using RAG over a Knowledge Base of 27+ international documents.\n\n"
+        "**7 AI Agents** (Dataset, OpenSource, Sandbox, Research, Deployment, Standards, UseCase) "
+        "assess 13 dimensions using RAG over a Knowledge Base of 57+ international documents.\n\n"
+        "**Use Case Standardisation** maps AI use cases to the ITU-T Y.3172 ML pipeline "
+        "(SRC, Collector, Preprocessor, ML Function, SINK, Sandbox).\n\n"
         "**Causal Graph** propagates effects between interdependent dimensions."
     ),
     version="0.1.0",
@@ -107,6 +109,7 @@ app.add_middleware(
 app.include_router(delegates.router)
 app.include_router(query.router)
 app.include_router(whatif.router)
+app.include_router(usecase.router)
 app.include_router(decisions.router)
 app.include_router(dashboard.router)
 

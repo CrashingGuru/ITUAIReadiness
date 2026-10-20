@@ -228,11 +228,13 @@ class BaseAgent:
         """Build the full prompt with system prompt, evidence, and query."""
         context = context or {}
         interaction_type = context.get("interaction_type", "assessment")
-        evidence_text = self._format_evidence(evidence)
+        evidence_text = self._format_evidence(evidence, interaction_type)
         dim_names = ", ".join(f"D{d}" for d in self.dimensions)
 
         if interaction_type == "clarification":
             return self._build_clarification_prompt(query, evidence_text, dim_names)
+        elif interaction_type == "whatif":
+            return self._build_whatif_prompt(query, evidence_text, dim_names, country)
         else:
             return self._build_assessment_prompt(query, evidence_text, dim_names, country)
 
@@ -268,6 +270,48 @@ Focus on:
 - Which factors it maps to (data, research, deployment, standards, opensource, sandbox)
 - How it relates to other dimensions
 - Provide specific examples from the framework evidence above"""
+
+    def _build_whatif_prompt(
+        self,
+        query: str,
+        evidence_text: str,
+        dim_names: str,
+        country: Optional[str] = None,
+    ) -> str:
+        """Prompt for what-if scenario analysis — detailed impact reasoning."""
+        return f"""You are conducting a WHAT-IF POLICY ANALYSIS for {country or 'a country'} using the ITU AI Readiness Framework.
+Your expertise covers dimensions: {dim_names}.
+
+Analyze the proposed scenario and reason through its CAUSAL IMPACT on each of your dimensions.
+Think step-by-step: what changes does this policy introduce? Which readiness factors improve?
+What are the second-order effects? What prerequisites or risks exist?
+
+EVIDENCE FROM KNOWLEDGE BASE:
+{evidence_text}
+
+COUNTRY: {country or 'Not specified'}
+
+SCENARIO: {query}
+
+Respond with a JSON object containing:
+{{
+  "dimensions_assessed": [list of dimension IDs impacted by this scenario],
+  "scores": [
+    {{
+      "dimension_id": <int 1-13>,
+      "dimension_name": "<name>",
+      "score": <float — the PROJECTED score after this policy>,
+      "evidence": ["<how this policy affects this dimension>", "<supporting reasoning>"],
+      "confidence": <float 0.0-1.0>,
+      "gaps": ["<risks or prerequisites that could limit impact>"],
+      "recommendations": ["<complementary actions to maximize impact>"]
+    }}
+  ],
+  "narrative": "<Detailed analysis (8-12 sentences): explain how the scenario impacts each dimension, describe causal chains between dimensions, identify synergies and risks, compare with similar initiatives from other countries in the evidence, and provide actionable recommendations>",
+  "sources_used": ["<source file 1>", "<source file 2>"]
+}}
+
+Be specific and cite evidence. Quantify impact where possible. Draw comparisons to similar country strategies in the knowledge base."""
 
     def _build_assessment_prompt(
         self,
@@ -308,17 +352,25 @@ Respond with a JSON object containing:
 If you cannot assess a dimension due to insufficient evidence, set its score to -1
 and explain in the gaps field. Always provide a narrative summary."""
 
-    def _format_evidence(self, evidence: list[dict[str, Any]]) -> str:
+    def _format_evidence(self, evidence: list[dict[str, Any]], interaction_type: str = "assessment") -> str:
         """Format evidence items into readable text for the prompt."""
         if not evidence:
             return "(No relevant evidence found)"
 
+        # Give what-if and clarification queries more evidence context
+        if interaction_type in ("whatif", "clarification"):
+            max_chunks = 10
+            max_text = 800
+        else:
+            max_chunks = 8
+            max_text = 300
+
         parts = []
-        for i, e in enumerate(evidence[:8], 1):
+        for i, e in enumerate(evidence[:max_chunks], 1):
             meta = e.get("metadata", {})
             source = meta.get("source_file", "unknown")
             country = meta.get("country", "")
-            text = e.get("text", "")[:300]  # truncate to keep prompt compact
+            text = e.get("text", "")[:max_text]
             parts.append(f"[{i}] Source: {source} | Country: {country}\n{text}")
 
         return "\n\n".join(parts)
@@ -338,8 +390,8 @@ and explain in the gaps field. Always provide a narrative summary."""
                 ],
                 options={
                     "temperature": 0.3,
-                    "num_predict": 4096,
-                    "num_ctx": 8192,
+                    "num_predict": 8192,
+                    "num_ctx": 12288,
                 },
                 format="json",
             )
@@ -371,7 +423,7 @@ and explain in the gaps field. Always provide a narrative summary."""
                 agent_name=self.name,
                 dimensions_assessed=self.dimensions,
                 scores=[],
-                narrative=raw_response[:500],
+                narrative=raw_response[:2500],
                 sources_used=[],
             )
 

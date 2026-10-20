@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     kb_main_collection: str = "kb_main"
     kb_decisions_collection: str = "kb_decisions"
     kb_framework_collection: str = "kb_framework"
+    kb_usecase_collection: str = "kb_usecase"
 
     # Chunking
     chunk_size: int = 256
